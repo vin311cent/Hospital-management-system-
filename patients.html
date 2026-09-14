@@ -1,0 +1,103 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Dashboard | Student Management System</title>
+    <link rel="stylesheet" href="style.css">
+</head>
+<body>
+    <div class="admin-shell">
+        <aside class="sidebar">
+            <div class="brand"> MediCare HMS</div>
+            <hr>
+            <nav class="nav-links">
+                <a class="nav-item active" href="dashboard.html">Dashboard</a>
+                <a class="nav-item" href="Patients.html">Patients</a>
+                <a class="nav-item" href="Appointments.html">Appointments</a>
+                <a class="nav-item" href="Wards & Beds.html">Wards & Beds</a>
+                <a class="nav-item" href="Billing.html">Billing</a>
+            </nav>
+            <a href="logout.html" class="logout-link">Log out</a>
+        </aside>
+
+        <main class="main-panel">
+          <h3>Patient Management</h3>
+            <div class="section">
+               <p class="section-title">Register New Patient</p>
+               <div class="card">
+                 <form method="post">
+                   <input type="hidden" name="action" value="create">
+                   <div class="form-grid">
+                     <div>
+                      <label>Full Name</label>
+                      <input name="full_name" required>
+                     </div>
+                     <div><label>Date of Birth</label>
+                      <input type="date" name="dob">
+                    </div>
+                     <div>
+                       <label>Gender</label>
+                       <select name="gender">
+                         <option value="">Select…</option>
+                         <option>Male</option>
+                         <option>Female</option>
+                       </select>
+                     </div>
+                    <div>
+                      <label>Phone</label>
+                      <input name="phone" required>
+                    </div>
+                    <div style="grid-column:1/-1">
+                      <label>Address</label>
+                      <input name="address"></div>
+                    <div>
+                      <label>Next of Kin Name</label>
+                      <input name="next_of_kin_name">
+                    </div>
+                    <div>
+                      <label>Next of Kin Phone</label>
+                      <input name="next_of_kin_phone">
+                    </div>
+                   </div>
+                   <button class="btn" style="margin-top:14px" type="submit">Register Patient</button>
+                 </form>
+               </div>
+             </div>
+             <div class="section">
+               <div class="flex-between">
+                 <p class="section-title mb-0">Patient Directory</p>
+                 <form method="get" class="search-box">
+                   <input type="text" name="q" placeholder="Search by name, phone or ID…"">
+                 </form>
+               </div>
+                <div class="table-wrap"><table>
+                 <tr>
+                  <th>ID</th>
+                  <th>Name</th>
+                  <th>DOB</th>
+                  <th>Gender</th>
+                  <th>Phone</th>
+                  <th>Next of Kin</th>
+                  <th></th>
+                </tr>
+                 <tr>
+                   <td> </td>
+                   <td>  </td>
+                   <td> </td>
+                   <td> </td>
+                   <td> </td>
+                   <td> </td>
+                   <td class="actions">
+                     <a class="btn btn-sm btn-outline" href="">View</a>
+                     <a class="btn btn-sm btn-danger" href="" onclick="return confirm('Deactivate this patient record?')">Deactivate</a>
+                   </td>
+                 </tr>
+                 <tr><td colspan="7" class="muted">No patients found.</td></tr>
+               </table>
+              </div>
+            </div>
+        </main>
+    </div>
+</body>
+</html>
