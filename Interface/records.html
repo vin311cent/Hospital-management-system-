@@ -1,0 +1,114 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Medical Records | Hospital Management System</title>
+    <link rel="stylesheet" href="style.css">
+</head>
+<body>
+    <div class="app-shell">
+        <aside class="sidebar">
+            <div class="brand">🏥 MediCare HMS</div>
+            <nav class="nav-links">
+                <a class="nav-item" href="dashboard.html">Dashboard</a>
+                <a class="nav-item" href="patients.html">Patients</a>
+                <a class="nav-item" href="appointments.html">Appointments</a>
+                <a class="nav-item active" href="records.html">Medical Records</a>
+                <a class="nav-item" href="pharmacy.html">Pharmacy</a>
+                <a class="nav-item" href="lab.html">Lab Requests</a>
+                <a class="nav-item" href="billing.html">Billing</a>
+                <a class="nav-item" href="audit_log.html">Audit Log</a>
+            </nav>
+            <a href="login.html" class="logout-link">Log out</a>
+        </aside>
+
+        <main class="content">
+            <h2 class="page-title">Medical Records</h2>
+
+            <div class="section">
+                <form method="get" class="card">
+                    <label>Select Patient</label>
+                    <select name="patient_id" onchange="this.form.submit()">
+                        <option value="">— Choose a patient —</option>
+                        <option value="1" selected>#101 — Jane Doe</option>
+                        <option value="2">#102 — John Smith</option>
+                    </select>
+                </form>
+            </div>
+
+            <div class="card section">
+                <strong>Jane Doe</strong> — DOB 1995-04-12, Female
+                &nbsp;·&nbsp; <a href="patient_view.html" style="color:var(--accent)">View full chart →</a>
+            </div>
+
+            <div class="grid grid-2 section">
+                <div class="card">
+                    <p class="section-title">Add Diagnosis / Consultation Note</p>
+                    <form method="post">
+                        <input type="hidden" name="action" value="add_record">
+                        <label>Diagnosis</label>
+                        <textarea name="diagnosis" required></textarea>
+                        <label style="margin-top:8px">Notes</label>
+                        <textarea name="notes"></textarea>
+                        <div class="form-grid" style="margin-top:8px">
+                            <div><label>Temperature (°C)</label><input name="temperature" placeholder="e.g. 37.2"></div>
+                            <div><label>Blood Pressure</label><input name="blood_pressure" placeholder="e.g. 120/80"></div>
+                            <div><label>Pulse (bpm)</label><input name="pulse" placeholder="e.g. 76"></div>
+                        </div>
+                        <button class="btn" style="margin-top:14px" type="submit">Save Record &amp; Bill Consultation</button>
+                    </form>
+                </div>
+
+                <div class="card">
+                    <p class="section-title">Issue Prescription</p>
+                    <form method="post">
+                        <input type="hidden" name="action" value="prescribe">
+                        <label>Link to Record (optional)</label>
+                        <select name="medical_record_id">
+                            <option value="">— None —</option>
+                            <option value="1">2026-10-01 — Acute Bronchitis</option>
+                        </select>
+                        <label style="margin-top:8px">Medicine</label>
+                        <select name="medicine_id" required>
+                            <option value="1">Amoxicillin 500mg (120 in stock)</option>
+                            <option value="2">Paracetamol 500mg (450 in stock)</option>
+                        </select>
+                        <div class="form-grid" style="margin-top:8px">
+                            <div><label>Dosage</label><input name="dosage" placeholder="e.g. 1 tablet" required></div>
+                            <div><label>Frequency</label><input name="frequency" placeholder="e.g. 3x daily" required></div>
+                            <div><label>Duration</label><input name="duration" placeholder="e.g. 5 days" required></div>
+                            <div><label>Quantity</label><input type="number" name="quantity" min="1" value="1" required></div>
+                        </div>
+                        <button class="btn" style="margin-top:14px" type="submit">Issue Prescription</button>
+                    </form>
+                </div>
+            </div>
+
+            <div class="section">
+                <p class="section-title">Record History</p>
+                <div class="table-wrap">
+                    <table>
+                        <thead>
+                            <tr>
+                                <th>Date</th>
+                                <th>Diagnosis</th>
+                                <th>Notes</th>
+                                <th>Vitals</th>
+                            </tr>
+                        </thead>
+                        <tbody>
+                            <tr>
+                                <td>2026-09-28</td>
+                                <td>Acute Bronchitis</td>
+                                <td>Prescribed antibiotic course and rest.</td>
+                                <td class="muted">Temp: 38.1 BP: 125/82 Pulse: 80</td>
+                            </tr>
+                        </tbody>
+                    </table>
+                </div>
+            </div>
+        </main>
+    </div>
+</body>
+</html>

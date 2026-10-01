@@ -1,0 +1,84 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Patient View | Hospital Management System</title>
+    <link rel="stylesheet" href="style.css">
+</head>
+<body>
+    <div class="app-shell">
+        <aside class="sidebar">
+            <div class="brand">🏥 MediCare HMS</div>
+            <nav class="nav-links">
+                <a class="nav-item" href="dashboard.html">Dashboard</a>
+                <a class="nav-item active" href="patients.html">Patients</a>
+                <a class="nav-item" href="appointments.html">Appointments</a>
+                <a class="nav-item" href="records.html">Medical Records</a>
+                <a class="nav-item" href="pharmacy.html">Pharmacy</a>
+                <a class="nav-item" href="lab.html">Lab Requests</a>
+                <a class="nav-item" href="billing.html">Billing</a>
+                <a class="nav-item" href="audit_log.html">Audit Log</a>
+            </nav>
+            <a href="login.html" class="logout-link">Log out</a>
+        </aside>
+
+        <main class="content">
+            <div class="card section">
+                <div class="flex-between">
+                    <div>
+                        <h2 style="margin:0 0 4px;color:var(--navy)">Jane Doe <span class="muted">#101</span></h2>
+                        <div class="muted">DOB: 1995-04-12 · Gender: Female · Phone: +260971234567</div>
+                        <div class="muted">Address: Lusaka, Zambia</div>
+                        <div class="muted">Next of kin: Mark Doe (+260977654321)</div>
+                    </div>
+                    <a class="btn" href="records.html">+ Add Medical Record</a>
+                </div>
+            </div>
+
+            <div class="section">
+                <p class="section-title">Medical Records</p>
+                <div class="table-wrap">
+                    <table>
+                        <thead>
+                            <tr>
+                                <th>Date</th>
+                                <th>Doctor</th>
+                                <th>Diagnosis</th>
+                                <th>Notes</th>
+                                <th>Vitals</th>
+                            </tr>
+                        </thead>
+                        <tbody>
+                            <tr>
+                                <td>2026-09-28</td>
+                                <td>Dr. Smith</td>
+                                <td>Acute Bronchitis</td>
+                                <td>Prescribed antibiotic course and rest.</td>
+                                <td class="muted">Temp: 38.1 BP: 125/82 Pulse: 80</td>
+                            </tr>
+                        </tbody>
+                    </table>
+                </div>
+            </div>
+
+            <div class="section">
+                <p class="section-title">Billing</p>
+                <div class="card" style="margin-bottom:12px">
+                    <div class="flex-between">
+                        <strong>Bill #204 — 2026-09-30</strong>
+                        <span class="badge badge-unpaid">Unpaid</span>
+                    </div>
+                    <table style="margin-top:10px">
+                        <tbody>
+                            <tr><td>Consultation Fee</td><td style="text-align:right">K 200.00</td></tr>
+                            <tr><td>Lab Test: FBC</td><td style="text-align:right">K 250.00</td></tr>
+                            <tr><td><strong>Total</strong></td><td style="text-align:right"><strong>K 450.00</strong></td></tr>
+                        </tbody>
+                    </table>
+                </div>
+            </div>
+        </main>
+    </div>
+</body>
+</html>

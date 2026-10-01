@@ -1,0 +1,90 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Dashboard | Hospital Management System</title>
+    <link rel="stylesheet" href="style.css">
+</head>
+<body>
+    <div class="app-shell">
+        <aside class="sidebar">
+            <div class="brand">🏥 MediCare HMS</div>
+            <nav class="nav-links">
+                <a class="nav-item active" href="dashboard.html">Dashboard</a>
+                <a class="nav-item" href="patients.html">Patients</a>
+                <a class="nav-item" href="appointments.html">Appointments</a>
+                <a class="nav-item" href="records.html">Medical Records</a>
+                <a class="nav-item" href="pharmacy.html">Pharmacy</a>
+                <a class="nav-item" href="lab.html">Lab Requests</a>
+                <a class="nav-item" href="billing.html">Billing</a>
+                <a class="nav-item" href="audit_log.html">Audit Log</a>
+            </nav>
+            <a href="login.html" class="logout-link">Log out</a>
+        </aside>
+
+        <main class="content">
+            <h2 class="page-title">Dashboard</h2>
+
+            <div class="grid grid-4 section">
+                <div class="card stat-card">
+                    <div class="stat-number">124</div>
+                    <div class="stat-label">Active Patients</div>
+                </div>
+                <div class="card stat-card">
+                    <div class="stat-number">18</div>
+                    <div class="stat-label">Appointments Today</div>
+                </div>
+                <div class="card stat-card danger">
+                    <div class="stat-number">42/45</div>
+                    <div class="stat-label">Beds Occupied</div>
+                </div>
+                <div class="card stat-card warn">
+                    <div class="stat-number">3</div>
+                    <div class="stat-label">Medicines Low on Stock</div>
+                </div>
+            </div>
+
+            <div class="section">
+                <div class="card">
+                    <div class="stat-label">Total Unpaid Billing</div>
+                    <div class="stat-number" style="color:var(--danger)">K 12,450.00</div>
+                </div>
+            </div>
+
+            <div class="section">
+                <p class="section-title">Recent Activity</p>
+                <div class="table-wrap">
+                    <table>
+                        <thead>
+                            <tr>
+                                <th>When</th>
+                                <th>User</th>
+                                <th>Action</th>
+                                <th>Entity</th>
+                                <th>Details</th>
+                            </tr>
+                        </thead>
+                        <tbody>
+                            <tr>
+                                <td>2026-10-01 10:30</td>
+                                <td>Dr. Smith</td>
+                                <td>CREATE</td>
+                                <td>Medical Record</td>
+                                <td>Added record for Patient #102</td>
+                            </tr>
+                            <tr>
+                                <td>2026-10-01 09:15</td>
+                                <td>Nurse Joy</td>
+                                <td>UPDATE</td>
+                                <td>Vitals</td>
+                                <td>Updated vitals for Bed #12</td>
+                            </tr>
+                        </tbody>
+                    </table>
+                </div>
+            </div>
+        </main>
+    </div>
+</body>
+</html>

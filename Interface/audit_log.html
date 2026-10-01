@@ -1,0 +1,67 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Audit Log | Hospital Management System</title>
+    <link rel="stylesheet" href="style.css">
+</head>
+<body>
+    <div class="app-shell">
+        <aside class="sidebar">
+            <div class="brand">🏥 MediCare HMS</div>
+            <nav class="nav-links">
+                <a class="nav-item" href="dashboard.html">Dashboard</a>
+                <a class="nav-item" href="patients.html">Patients</a>
+                <a class="nav-item" href="appointments.html">Appointments</a>
+                <a class="nav-item" href="records.html">Medical Records</a>
+                <a class="nav-item" href="pharmacy.html">Pharmacy</a>
+                <a class="nav-item" href="lab.html">Lab Requests</a>
+                <a class="nav-item" href="billing.html">Billing</a>
+                <a class="nav-item active" href="audit_log.html">Audit Log</a>
+            </nav>
+            <a href="login.html" class="logout-link">Log out</a>
+        </aside>
+
+        <main class="content">
+            <h2 class="page-title">Audit Log</h2>
+            <p class="muted" style="margin-bottom: 20px;">Every create, update, and access-sensitive action in the system is recorded here with the acting user and timestamp.</p>
+
+            <div class="section">
+                <div class="table-wrap">
+                    <table>
+                        <thead>
+                            <tr>
+                                <th>When</th>
+                                <th>User</th>
+                                <th>Action</th>
+                                <th>Entity</th>
+                                <th>Entity ID</th>
+                                <th>Details</th>
+                            </tr>
+                        </thead>
+                        <tbody>
+                            <tr>
+                                <td>2026-10-01 10:30</td>
+                                <td>Dr. Smith</td>
+                                <td>CREATE</td>
+                                <td>Medical Record</td>
+                                <td>#84</td>
+                                <td>Added record for Patient #101</td>
+                            </tr>
+                            <tr>
+                                <td>2026-10-01 09:15</td>
+                                <td>Nurse Joy</td>
+                                <td>UPDATE</td>
+                                <td>Vitals</td>
+                                <td>#12</td>
+                                <td>Updated vitals for Bed #12</td>
+                            </tr>
+                        </tbody>
+                    </table>
+                </div>
+            </div>
+        </main>
+    </div>
+</body>
+</html>

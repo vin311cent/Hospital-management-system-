@@ -1,0 +1,83 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Record Vitals | Hospital Management System</title>
+    <link rel="stylesheet" href="style.css">
+</head>
+<body>
+    <div class="app-shell">
+        <aside class="sidebar">
+            <div class="brand">🏥 MediCare HMS</div>
+            <nav class="nav-links">
+                <a class="nav-item" href="dashboard.html">Dashboard</a>
+                <a class="nav-item" href="patients.html">Patients</a>
+                <a class="nav-item" href="appointments.html">Appointments</a>
+                <a class="nav-item" href="records.html">Medical Records</a>
+                <a class="nav-item active" href="vitals.html">Record Vitals</a>
+                <a class="nav-item" href="wards.html">Wards &amp; Beds</a>
+                <a class="nav-item" href="pharmacy.html">Pharmacy</a>
+                <a class="nav-item" href="lab.html">Lab Requests</a>
+                <a class="nav-item" href="billing.html">Billing</a>
+            </nav>
+            <a href="login.html" class="logout-link">Log out</a>
+        </aside>
+
+        <main class="content">
+            <h2 class="page-title">Record Vitals</h2>
+
+            <div class="section">
+                <p class="section-title">Record Vitals — Ward Round</p>
+                <div class="card">
+                    <form method="post">
+                        <div class="form-grid">
+                            <div style="grid-column:1/-1">
+                                <label>Patient</label>
+                                <select name="patient_id" required>
+                                    <option value="">Select patient…</option>
+                                    <option value="1">#101 — Jane Doe</option>
+                                    <option value="2">#102 — John Smith</option>
+                                </select>
+                            </div>
+                            <div><label>Temperature (°C)</label><input name="temperature" placeholder="e.g. 36.8"></div>
+                            <div><label>Blood Pressure</label><input name="blood_pressure" placeholder="e.g. 118/76"></div>
+                            <div><label>Pulse (bpm)</label><input name="pulse" placeholder="e.g. 72"></div>
+                            <div style="grid-column:1/-1"><label>Notes</label><textarea name="notes" placeholder="Any observations…"></textarea></div>
+                        </div>
+                        <button class="btn" style="margin-top:14px" type="submit">Save Vitals</button>
+                    </form>
+                </div>
+            </div>
+
+            <div class="section">
+                <p class="section-title">Recently Recorded</p>
+                <div class="table-wrap">
+                    <table>
+                        <thead>
+                            <tr>
+                                <th>Time</th>
+                                <th>Patient</th>
+                                <th>Temp</th>
+                                <th>BP</th>
+                                <th>Pulse</th>
+                                <th>Notes</th>
+                            </tr>
+                        </thead>
+                        <tbody>
+                            <tr>
+                                <td>2026-10-01 08:30</td>
+                                <td>Jane Doe</td>
+                                <td>36.8 °C</td>
+                                <td>118/76</td>
+                                <td>72 bpm</td>
+                                <td>Patient resting comfortably.</td>
+                            </tr>
+                        </tbody>
+                    </table>
+                </div>
+            </div>
+        </main>
+    </div>
+</body>
+</html>

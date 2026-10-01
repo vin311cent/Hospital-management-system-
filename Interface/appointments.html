@@ -1,0 +1,96 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Appointments | Hospital Management System</title>
+    <link rel="stylesheet" href="style.css">
+</head>
+<body>
+    <div class="app-shell">
+        <aside class="sidebar">
+            <div class="brand">🏥 MediCare HMS</div>
+            <nav class="nav-links">
+                <a class="nav-item" href="dashboard.html">Dashboard</a>
+                <a class="nav-item" href="patients.html">Patients</a>
+                <a class="nav-item active" href="appointments.html">Appointments</a>
+                <a class="nav-item" href="records.html">Medical Records</a>
+                <a class="nav-item" href="pharmacy.html">Pharmacy</a>
+                <a class="nav-item" href="lab.html">Lab Requests</a>
+                <a class="nav-item" href="billing.html">Billing</a>
+                <a class="nav-item" href="audit_log.html">Audit Log</a>
+            </nav>
+            <a href="login.html" class="logout-link">Log out</a>
+        </aside>
+
+        <main class="content">
+            <h2 class="page-title">Appointments</h2>
+
+            <div class="section">
+                <p class="section-title">Book Appointment</p>
+                <div class="card">
+                    <form method="post">
+                        <input type="hidden" name="action" value="book">
+                        <div class="form-grid">
+                            <div>
+                                <label>Patient</label>
+                                <select name="patient_id" required>
+                                    <option value="">Select patient…</option>
+                                    <option value="1">#101 — Jane Doe</option>
+                                </select>
+                            </div>
+                            <div>
+                                <label>Doctor</label>
+                                <select name="doctor_id" required>
+                                    <option value="">Select doctor…</option>
+                                    <option value="1">Dr. Smith — Cardiology</option>
+                                </select>
+                            </div>
+                            <div><label>Date</label><input type="date" name="appointment_date" required></div>
+                            <div><label>Time</label><input type="time" name="appointment_time" required></div>
+                            <div style="grid-column:1/-1">
+                                <label>Reason for Visit</label>
+                                <input name="reason" placeholder="e.g. Routine checkup, follow-up, fever…">
+                            </div>
+                        </div>
+                        <button class="btn" style="margin-top:14px" type="submit">Book Appointment</button>
+                    </form>
+                </div>
+            </div>
+
+            <div class="section">
+                <p class="section-title">All Appointments</p>
+                <div class="table-wrap">
+                    <table>
+                        <thead>
+                            <tr>
+                                <th>Date</th>
+                                <th>Time</th>
+                                <th>Patient</th>
+                                <th>Doctor</th>
+                                <th>Reason</th>
+                                <th>Status</th>
+                                <th></th>
+                            </tr>
+                        </thead>
+                        <tbody>
+                            <tr>
+                                <td>2026-10-02</td>
+                                <td>10:00 AM</td>
+                                <td>Jane Doe</td>
+                                <td>Dr. Smith</td>
+                                <td>Follow-up checkup</td>
+                                <td><span class="badge badge-pending">Scheduled</span></td>
+                                <td class="actions">
+                                    <a class="btn btn-sm" href="#">Mark Completed</a>
+                                    <a class="btn btn-sm btn-danger" href="#" onclick="return confirm('Cancel this appointment?')">Cancel</a>
+                                </td>
+                            </tr>
+                        </tbody>
+                    </table>
+                </div>
+            </div>
+        </main>
+    </div>
+</body>
+</html>

@@ -1,0 +1,106 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Reports | Hospital Management System</title>
+    <link rel="stylesheet" href="style.css">
+</head>
+<body>
+    <div class="app-shell">
+        <aside class="sidebar">
+            <div class="brand">🏥 MediCare HMS</div>
+            <nav class="nav-links">
+                <a class="nav-item" href="dashboard.html">Dashboard</a>
+                <a class="nav-item" href="patients.html">Patients</a>
+                <a class="nav-item" href="appointments.html">Appointments</a>
+                <a class="nav-item" href="records.html">Medical Records</a>
+                <a class="nav-item" href="pharmacy.html">Pharmacy</a>
+                <a class="nav-item" href="lab.html">Lab Requests</a>
+                <a class="nav-item" href="billing.html">Billing</a>
+                <a class="nav-item active" href="reports.html">Reports</a>
+                <a class="nav-item" href="users.html">Staff Accounts</a>
+                <a class="nav-item" href="audit_log.html">Audit Log</a>
+            </nav>
+            <a href="login.html" class="logout-link">Log out</a>
+        </aside>
+
+        <main class="content">
+            <h2 class="page-title">Reports</h2>
+
+            <div class="grid grid-4 section">
+                <div class="card stat-card">
+                    <div class="stat-number">45</div>
+                    <div class="stat-label">Admissions (30 days)</div>
+                </div>
+                <div class="card stat-card danger">
+                    <div class="stat-number">88.9%</div>
+                    <div class="stat-label">Bed Occupancy Rate</div>
+                </div>
+                <div class="card stat-card">
+                    <div class="stat-number">K 48,200.00</div>
+                    <div class="stat-label">Revenue Collected</div>
+                </div>
+                <div class="card stat-card warn">
+                    <div class="stat-number">K 12,450.00</div>
+                    <div class="stat-label">Outstanding Balance</div>
+                </div>
+            </div>
+
+            <div class="grid grid-2 section">
+                <div>
+                    <p class="section-title">Appointments by Doctor</p>
+                    <div class="table-wrap">
+                        <table>
+                            <thead>
+                                <tr>
+                                    <th>Doctor</th>
+                                    <th>Appointments</th>
+                                </tr>
+                            </thead>
+                            <tbody>
+                                <tr>
+                                    <td>Dr. Smith (Cardiology)</td>
+                                    <td>24</td>
+                                </tr>
+                                <tr>
+                                    <td>Dr. Jones (Pediatrics)</td>
+                                    <td>18</td>
+                                </tr>
+                            </tbody>
+                        </table>
+                    </div>
+                </div>
+                <div>
+                    <p class="section-title">Occupancy by Ward</p>
+                    <div class="table-wrap">
+                        <table>
+                            <thead>
+                                <tr>
+                                    <th>Ward</th>
+                                    <th>Occupied</th>
+                                    <th>Total</th>
+                                </tr>
+                            </thead>
+                            <tbody>
+                                <tr>
+                                    <td>Male Medical Ward</td>
+                                    <td>18</td>
+                                    <td>20</td>
+                                </tr>
+                                <tr>
+                                    <td>Female Surgical Ward</td>
+                                    <td>22</td>
+                                    <td>25</td>
+                                </tr>
+                            </tbody>
+                        </table>
+                    </div>
+                </div>
+            </div>
+
+            <p class="muted">Figures are computed live from current system data. Export/print this page via your browser's print function (Ctrl/Cmd+P) to produce a PDF for management review.</p>
+        </main>
+    </div>
+</body>
+</html>

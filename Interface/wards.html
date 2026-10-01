@@ -1,0 +1,99 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Wards &amp; Beds | Hospital Management System</title>
+    <link rel="stylesheet" href="style.css">
+</head>
+<body>
+    <div class="app-shell">
+        <aside class="sidebar">
+            <div class="brand">🏥 MediCare HMS</div>
+            <nav class="nav-links">
+                <a class="nav-item" href="dashboard.html">Dashboard</a>
+                <a class="nav-item" href="patients.html">Patients</a>
+                <a class="nav-item" href="appointments.html">Appointments</a>
+                <a class="nav-item" href="records.html">Medical Records</a>
+                <a class="nav-item" href="vitals.html">Record Vitals</a>
+                <a class="nav-item active" href="wards.html">Wards &amp; Beds</a>
+                <a class="nav-item" href="pharmacy.html">Pharmacy</a>
+                <a class="nav-item" href="lab.html">Lab Requests</a>
+                <a class="nav-item" href="billing.html">Billing</a>
+            </nav>
+            <a href="login.html" class="logout-link">Log out</a>
+        </aside>
+
+        <main class="content">
+            <h2 class="page-title">Wards &amp; Beds</h2>
+
+            <div class="grid grid-3 section">
+                <div class="card stat-card">
+                    <div class="stat-number">45</div>
+                    <div class="stat-label">Total Beds</div>
+                </div>
+                <div class="card stat-card danger">
+                    <div class="stat-number">40</div>
+                    <div class="stat-label">Occupied</div>
+                </div>
+                <div class="card stat-card">
+                    <div class="stat-number">5</div>
+                    <div class="stat-label">Vacant</div>
+                </div>
+            </div>
+
+            <div class="section">
+                <p class="section-title">Bed Status</p>
+                <div class="table-wrap">
+                    <table>
+                        <thead>
+                            <tr>
+                                <th>Ward</th>
+                                <th>Bed</th>
+                                <th>Status</th>
+                                <th>Patient</th>
+                                <th>Admitted</th>
+                                <th></th>
+                            </tr>
+                        </thead>
+                        <tbody>
+                            <tr>
+                                <td>Male Ward</td>
+                                <td>Bed #01</td>
+                                <td><span class="badge badge-vacant">Vacant</span></td>
+                                <td>—</td>
+                                <td>—</td>
+                                <td>
+                                    <form method="post" class="flex-between">
+                                        <input type="hidden" name="action" value="admit">
+                                        <input type="hidden" name="bed_id" value="1">
+                                        <select name="patient_id" required style="min-width:160px">
+                                            <option value="">Admit patient…</option>
+                                            <option value="1">#101 — Jane Doe</option>
+                                        </select>
+                                        <button class="btn btn-sm" type="submit">Admit</button>
+                                    </form>
+                                </td>
+                            </tr>
+                            <tr>
+                                <td>Female Ward</td>
+                                <td>Bed #04</td>
+                                <td><span class="badge badge-occupied">Occupied</span></td>
+                                <td>Jane Doe</td>
+                                <td>2026-09-28 14:00</td>
+                                <td>
+                                    <form method="post" onsubmit="return confirm('Discharge this patient? A bed-stay charge will be added to their bill.')">
+                                        <input type="hidden" name="action" value="discharge">
+                                        <input type="hidden" name="bed_id" value="4">
+                                        <button class="btn btn-sm btn-danger" type="submit">Discharge</button>
+                                    </form>
+                                </td>
+                            </tr>
+                        </tbody>
+                    </table>
+                </div>
+            </div>
+        </main>
+    </div>
+</body>
+</html>

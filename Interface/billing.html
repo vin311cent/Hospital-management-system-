@@ -1,0 +1,78 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Billing | Hospital Management System</title>
+    <link rel="stylesheet" href="style.css">
+</head>
+<body>
+    <div class="app-shell">
+        <aside class="sidebar">
+            <div class="brand">🏥 MediCare HMS</div>
+            <nav class="nav-links">
+                <a class="nav-item" href="dashboard.html">Dashboard</a>
+                <a class="nav-item" href="patients.html">Patients</a>
+                <a class="nav-item" href="appointments.html">Appointments</a>
+                <a class="nav-item" href="records.html">Medical Records</a>
+                <a class="nav-item" href="pharmacy.html">Pharmacy</a>
+                <a class="nav-item" href="lab.html">Lab Requests</a>
+                <a class="nav-item active" href="billing.html">Billing</a>
+                <a class="nav-item" href="audit_log.html">Audit Log</a>
+            </nav>
+            <a href="login.html" class="logout-link">Log out</a>
+        </aside>
+
+        <main class="content">
+            <h2 class="page-title">Billing Management</h2>
+
+            <div class="grid grid-3 section">
+                <div class="card stat-card">
+                    <div class="stat-number">48</div>
+                    <div class="stat-label">Total Bills</div>
+                </div>
+                <div class="card stat-card danger">
+                    <div class="stat-number">K 12,450.00</div>
+                    <div class="stat-label">Outstanding Balance</div>
+                </div>
+                <div class="card stat-card ok">
+                    <div class="stat-number">36</div>
+                    <div class="stat-label">Bills Paid</div>
+                </div>
+            </div>
+
+            <div class="section">
+                <p class="section-title">All Bills</p>
+                <div class="table-wrap">
+                    <table>
+                        <thead>
+                            <tr>
+                                <th>Bill #</th>
+                                <th>Patient</th>
+                                <th>Date</th>
+                                <th>Items</th>
+                                <th>Total</th>
+                                <th>Status</th>
+                                <th></th>
+                            </tr>
+                        </thead>
+                        <tbody>
+                            <tr>
+                                <td>#204</td>
+                                <td><a href="patient_view.html" style="color:var(--accent)">Jane Doe</a></td>
+                                <td>2026-09-30</td>
+                                <td>3</td>
+                                <td>K 450.00</td>
+                                <td><span class="badge badge-unpaid">Unpaid</span></td>
+                                <td>
+                                    <a class="btn btn-sm" href="#">Mark Paid</a>
+                                </td>
+                            </tr>
+                        </tbody>
+                    </table>
+                </div>
+            </div>
+        </main>
+    </div>
+</body>
+</html>

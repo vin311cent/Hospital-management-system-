@@ -1,0 +1,83 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Lab Requests | Hospital Management System</title>
+    <link rel="stylesheet" href="style.css">
+</head>
+<body>
+    <div class="app-shell">
+        <aside class="sidebar">
+            <div class="brand">🏥 MediCare HMS</div>
+            <nav class="nav-links">
+                <a class="nav-item" href="dashboard.html">Dashboard</a>
+                <a class="nav-item" href="patients.html">Patients</a>
+                <a class="nav-item" href="appointments.html">Appointments</a>
+                <a class="nav-item" href="records.html">Medical Records</a>
+                <a class="nav-item" href="pharmacy.html">Pharmacy</a>
+                <a class="nav-item active" href="lab.html">Lab Requests</a>
+                <a class="nav-item" href="billing.html">Billing</a>
+                <a class="nav-item" href="audit_log.html">Audit Log</a>
+            </nav>
+            <a href="login.html" class="logout-link">Log out</a>
+        </aside>
+
+        <main class="content">
+            <h2 class="page-title">Lab Requests</h2>
+
+            <div class="section">
+                <p class="section-title">Request a Lab Test</p>
+                <div class="card">
+                    <form method="post">
+                        <input type="hidden" name="action" value="request">
+                        <div class="form-grid">
+                            <div>
+                                <label>Patient</label>
+                                <select name="patient_id" required>
+                                    <option value="">Select patient…</option>
+                                    <option value="1">#101 — Jane Doe</option>
+                                </select>
+                            </div>
+                            <div><label>Test Name</label><input name="test_name" placeholder="e.g. Full Blood Count" required></div>
+                        </div>
+                        <button class="btn" style="margin-top:14px" type="submit">Request Test</button>
+                    </form>
+                </div>
+            </div>
+
+            <div class="section">
+                <p class="section-title">Pending Lab Requests</p>
+                <div class="table-wrap">
+                    <table>
+                        <thead>
+                            <tr>
+                                <th>Requested</th>
+                                <th>Patient</th>
+                                <th>Doctor</th>
+                                <th>Test</th>
+                                <th>Upload Result</th>
+                            </tr>
+                        </thead>
+                        <tbody>
+                            <tr>
+                                <td>2026-10-01 09:30</td>
+                                <td>Jane Doe</td>
+                                <td>Dr. Smith</td>
+                                <td>Full Blood Count</td>
+                                <td>
+                                    <form method="post" class="flex-between">
+                                        <input type="hidden" name="action" value="complete">
+                                        <input name="result" placeholder="Enter result…" required class="flex-grow">
+                                        <button class="btn btn-sm" type="submit">Submit</button>
+                                    </form>
+                                </td>
+                            </tr>
+                        </tbody>
+                    </table>
+                </div>
+            </div>
+        </main>
+    </div>
+</body>
+</html>
