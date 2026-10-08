@@ -1,0 +1,63 @@
+{% extends "base.html" %}
+{% block title %}My Health Record{% endblock %}
+{% block heading %}My Health Record{% endblock %}
+{% block content %}
+
+{% if not patient %}
+<p class="muted">No patient record is linked to your account yet. Please contact reception.</p>
+{% else %}
+
+<div class="section">
+  <p class="section-title">Diagnoses &amp; Consultation Notes</p>
+  <div class="table-wrap"><table>
+    <tr><th>Date</th><th>Doctor</th><th>Diagnosis</th><th>Notes</th></tr>
+    {% for r in records if r.diagnosis != 'Vitals observation' %}
+    <tr>
+      <td>{{ r.created_at }}</td>
+      <td>{{ r.doctor_name }}</td>
+      <td>{{ r.diagnosis }}</td>
+      <td>{{ r.notes }}</td>
+    </tr>
+    {% else %}
+    <tr><td colspan="4" class="muted">No records yet.</td></tr>
+    {% endfor %}
+  </table></div>
+</div>
+
+<div class="section">
+  <p class="section-title">Prescriptions</p>
+  <div class="table-wrap"><table>
+    <tr><th>Date</th><th>Doctor</th><th>Medicine</th><th>Dosage</th><th>Status</th></tr>
+    {% for p in prescriptions %}
+    <tr>
+      <td>{{ p.created_at }}</td>
+      <td>{{ p.doctor_name }}</td>
+      <td>{{ p.medicine_name }}</td>
+      <td>{{ p.dosage }} · {{ p.frequency }} · {{ p.duration }}</td>
+      <td><span class="badge badge-{{ p.status }}">{{ p.status|capitalize }}</span></td>
+    </tr>
+    {% else %}
+    <tr><td colspan="5" class="muted">No prescriptions yet.</td></tr>
+    {% endfor %}
+  </table></div>
+</div>
+
+<div class="section">
+  <p class="section-title">Lab Results</p>
+  <div class="table-wrap"><table>
+    <tr><th>Requested</th><th>Test</th><th>Status</th><th>Result</th></tr>
+    {% for l in labs %}
+    <tr>
+      <td>{{ l.requested_at }}</td>
+      <td>{{ l.test_name }}</td>
+      <td><span class="badge badge-{{ l.status }}">{{ l.status|capitalize }}</span></td>
+      <td>{{ l.result or '—' }}</td>
+    </tr>
+    {% else %}
+    <tr><td colspan="4" class="muted">No lab tests on record.</td></tr>
+    {% endfor %}
+  </table></div>
+</div>
+
+{% endif %}
+{% endblock %}

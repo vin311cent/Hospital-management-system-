@@ -1,0 +1,98 @@
+{% extends "base.html" %}
+{% block title %}Medical Records{% endblock %}
+{% block heading %}Medical Records{% endblock %}
+{% block content %}
+
+<div class="section">
+  <form method="get" class="card">
+    <label>Select Patient</label>
+    <select name="patient_id" onchange="this.form.submit()">
+      <option value="">— Choose a patient —</option>
+      {% for p in patients %}
+        <option value="{{ p.id }}" {{ 'selected' if p.id == patient_id }}>#{{ p.id }} — {{ p.full_name }}</option>
+      {% endfor %}
+    </select>
+  </form>
+</div>
+
+{% if patient %}
+<div class="card section">
+  <strong>{{ patient.full_name }}</strong> — DOB {{ patient.dob or '—' }}, {{ patient.gender }}
+  &nbsp;·&nbsp; <a href="{{ url_for('patient_view', patient_id=patient.id) }}">View full chart →</a>
+</div>
+
+<div class="grid grid-2 section">
+  <div class="card">
+    <p class="section-title">Add Diagnosis / Consultation Note</p>
+    <form method="post">
+      <input type="hidden" name="action" value="add_record">
+      <input type="hidden" name="patient_id" value="{{ patient_id }}">
+      <label>Diagnosis</label>
+      <textarea name="diagnosis" required></textarea>
+      <label>Notes</label>
+      <textarea name="notes"></textarea>
+      <div class="form-grid" style="margin-top:8px">
+        <div><label>Temperature (°C)</label><input name="temperature" placeholder="e.g. 37.2"></div>
+        <div><label>Blood Pressure</label><input name="blood_pressure" placeholder="e.g. 120/80"></div>
+        <div><label>Pulse (bpm)</label><input name="pulse" placeholder="e.g. 76"></div>
+      </div>
+      <button class="btn" style="margin-top:14px" type="submit">Save Record &amp; Bill Consultation</button>
+    </form>
+  </div>
+
+  <div class="card">
+    <p class="section-title">Issue Prescription</p>
+    <form method="post">
+      <input type="hidden" name="action" value="prescribe">
+      <input type="hidden" name="patient_id" value="{{ patient_id }}">
+      {% if records %}
+      <label>Link to Record (optional)</label>
+      <select name="medical_record_id">
+        <option value="">— None —</option>
+        {% for r in records %}
+          <option value="{{ r.id }}">{{ r.created_at }} — {{ r.diagnosis }}</option>
+        {% endfor %}
+      </select>
+      {% endif %}
+      <label>Medicine</label>
+      <select name="medicine_id" required>
+        {% for m in medicines %}
+          <option value="{{ m.id }}">{{ m.name }} ({{ m.stock_qty }} in stock)</option>
+        {% endfor %}
+      </select>
+      <div class="form-grid" style="margin-top:8px">
+        <div><label>Dosage</label><input name="dosage" placeholder="e.g. 1 tablet" required></div>
+        <div><label>Frequency</label><input name="frequency" placeholder="e.g. 3x daily" required></div>
+        <div><label>Duration</label><input name="duration" placeholder="e.g. 5 days" required></div>
+        <div><label>Quantity</label><input type="number" name="quantity" min="1" value="1" required></div>
+      </div>
+      <button class="btn" style="margin-top:14px" type="submit">Issue Prescription</button>
+    </form>
+  </div>
+</div>
+
+<div class="section">
+  <p class="section-title">Record History</p>
+  <div class="table-wrap"><table>
+    <tr><th>Date</th><th>Diagnosis</th><th>Notes</th><th>Vitals</th></tr>
+    {% for r in records %}
+    <tr>
+      <td>{{ r.created_at }}</td>
+      <td>{{ r.diagnosis }}</td>
+      <td>{{ r.notes }}</td>
+      <td class="muted">
+        {% if r.temperature %}Temp: {{ r.temperature }} {% endif %}
+        {% if r.blood_pressure %}BP: {{ r.blood_pressure }} {% endif %}
+        {% if r.pulse %}Pulse: {{ r.pulse }}{% endif %}
+      </td>
+    </tr>
+    {% else %}
+    <tr><td colspan="4" class="muted">No records for this patient yet.</td></tr>
+    {% endfor %}
+  </table></div>
+</div>
+{% else %}
+<p class="muted">Choose a patient above to view or add to their medical record.</p>
+{% endif %}
+
+{% endblock %}

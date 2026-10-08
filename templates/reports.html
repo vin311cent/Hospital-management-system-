@@ -1,0 +1,36 @@
+{% extends "base.html" %}
+{% block title %}Reports{% endblock %}
+{% block heading %}Reports{% endblock %}
+{% block content %}
+
+<div class="grid grid-4 section">
+  <div class="card stat-card"><div class="stat-number">{{ admissions_30 }}</div><div class="stat-label">Admissions (30 days)</div></div>
+  <div class="card stat-card {{ 'danger' if occupancy_rate > 80 }}"><div class="stat-number">{{ occupancy_rate }}%</div><div class="stat-label">Bed Occupancy Rate</div></div>
+  <div class="card stat-card"><div class="stat-number">{{ revenue|money }}</div><div class="stat-label">Revenue Collected</div></div>
+  <div class="card stat-card warn"><div class="stat-number">{{ outstanding|money }}</div><div class="stat-label">Outstanding Balance</div></div>
+</div>
+
+<div class="grid grid-2 section">
+  <div>
+    <p class="section-title">Appointments by Doctor</p>
+    <div class="table-wrap"><table>
+      <tr><th>Doctor</th><th>Appointments</th></tr>
+      {% for d in by_doctor %}
+        <tr><td>{{ d.name }}</td><td>{{ d.appt_count }}</td></tr>
+      {% endfor %}
+    </table></div>
+  </div>
+  <div>
+    <p class="section-title">Occupancy by Ward</p>
+    <div class="table-wrap"><table>
+      <tr><th>Ward</th><th>Occupied</th><th>Total</th></tr>
+      {% for w in by_ward %}
+        <tr><td>{{ w.name }}</td><td>{{ w.occupied }}</td><td>{{ w.total }}</td></tr>
+      {% endfor %}
+    </table></div>
+  </div>
+</div>
+
+<p class="muted">Figures are computed live from current system data. Export/print this page via your browser's print function (Ctrl/Cmd+P) to produce a PDF for management review.</p>
+
+{% endblock %}

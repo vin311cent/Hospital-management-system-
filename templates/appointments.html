@@ -1,0 +1,77 @@
+{% extends "base.html" %}
+{% block title %}Appointments{% endblock %}
+{% block heading %}Appointments{% endblock %}
+{% block content %}
+
+{% if current_role in ['admin', 'receptionist', 'patient'] %}
+<div class="section">
+  <p class="section-title">Book Appointment</p>
+  <div class="card">
+    <form method="post">
+      <input type="hidden" name="action" value="book">
+      <div class="form-grid">
+        {% if current_role != 'patient' %}
+        <div>
+          <label>Patient</label>
+          <select name="patient_id" required>
+            <option value="">Select patient…</option>
+            {% for p in patients %}
+              <option value="{{ p.id }}">#{{ p.id }} — {{ p.full_name }}</option>
+            {% endfor %}
+          </select>
+        </div>
+        {% endif %}
+        <div>
+          <label>Doctor</label>
+          <select name="doctor_id" required>
+            <option value="">Select doctor…</option>
+            {% for d in doctors %}
+              <option value="{{ d.id }}">{{ d.name }}{% if d.specialty %} — {{ d.specialty }}{% endif %}</option>
+            {% endfor %}
+          </select>
+        </div>
+        <div><label>Date</label><input type="date" name="appointment_date" required min="{{ today }}"></div>
+        <div><label>Time</label><input type="time" name="appointment_time" required></div>
+        <div style="grid-column:1/-1"><label>Reason for Visit</label><input name="reason" placeholder="e.g. Routine checkup, follow-up, fever…"></div>
+      </div>
+      <button class="btn" style="margin-top:14px" type="submit">Book Appointment</button>
+    </form>
+  </div>
+</div>
+{% endif %}
+
+<div class="section">
+  <p class="section-title">
+    {% if current_role == 'doctor' %}My Schedule{% elif current_role == 'patient' %}My Appointments{% else %}All Appointments{% endif %}
+  </p>
+  <div class="table-wrap"><table>
+    <tr>
+      <th>Date</th><th>Time</th>
+      {% if current_role != 'patient' %}<th>Patient</th>{% endif %}
+      {% if current_role != 'doctor' %}<th>Doctor</th>{% endif %}
+      <th>Reason</th><th>Status</th><th></th>
+    </tr>
+    {% for a in appointments %}
+    <tr>
+      <td>{{ a.appointment_date }}</td>
+      <td>{{ a.appointment_time }}</td>
+      {% if current_role != 'patient' %}<td>{{ a.patient_name }}</td>{% endif %}
+      {% if current_role != 'doctor' %}<td>{{ a.doctor_name }}</td>{% endif %}
+      <td>{{ a.reason }}</td>
+      <td><span class="badge badge-{{ a.status }}">{{ a.status|capitalize }}</span></td>
+      <td class="actions">
+        {% if a.status == 'scheduled' %}
+          {% if current_role == 'doctor' %}
+            <a class="btn btn-sm" href="{{ url_for('complete_appointment', appointment_id=a.id) }}">Mark Completed</a>
+          {% endif %}
+          <a class="btn btn-sm btn-danger" href="{{ url_for('cancel_appointment', appointment_id=a.id) }}" onclick="return confirm('Cancel this appointment?')">Cancel</a>
+        {% endif %}
+      </td>
+    </tr>
+    {% else %}
+    <tr><td colspan="7" class="muted">No appointments found.</td></tr>
+    {% endfor %}
+  </table></div>
+</div>
+
+{% endblock %}

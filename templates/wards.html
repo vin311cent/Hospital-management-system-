@@ -1,0 +1,49 @@
+{% extends "base.html" %}
+{% block title %}Wards & Beds{% endblock %}
+{% block heading %}Wards &amp; Beds{% endblock %}
+{% block content %}
+
+<div class="grid grid-3 section">
+  <div class="card stat-card"><div class="stat-number">{{ beds|length }}</div><div class="stat-label">Total Beds</div></div>
+  <div class="card stat-card danger"><div class="stat-number">{{ occupied }}</div><div class="stat-label">Occupied</div></div>
+  <div class="card stat-card"><div class="stat-number">{{ beds|length - occupied }}</div><div class="stat-label">Vacant</div></div>
+</div>
+
+<div class="section">
+  <p class="section-title">Bed Status</p>
+  <div class="table-wrap"><table>
+    <tr><th>Ward</th><th>Bed</th><th>Status</th><th>Patient</th><th>Admitted</th><th></th></tr>
+    {% for b in beds %}
+    <tr>
+      <td>{{ b.ward_name }}</td>
+      <td>{{ b.bed_number }}</td>
+      <td><span class="badge badge-{{ b.status }}">{{ b.status|capitalize }}</span></td>
+      <td>{{ b.patient_name if b.status == 'occupied' else '—' }}</td>
+      <td>{{ b.admitted_at if b.status == 'occupied' else '—' }}</td>
+      <td>
+        {% if b.status == 'vacant' %}
+          <form method="post" class="flex-between">
+            <input type="hidden" name="action" value="admit">
+            <input type="hidden" name="bed_id" value="{{ b.id }}">
+            <select name="patient_id" required style="min-width:160px">
+              <option value="">Admit patient…</option>
+              {% for p in patients %}
+                <option value="{{ p.id }}">#{{ p.id }} — {{ p.full_name }}</option>
+              {% endfor %}
+            </select>
+            <button class="btn btn-sm" type="submit">Admit</button>
+          </form>
+        {% else %}
+          <form method="post" onsubmit="return confirm('Discharge this patient? A bed-stay charge will be added to their bill.')">
+            <input type="hidden" name="action" value="discharge">
+            <input type="hidden" name="bed_id" value="{{ b.id }}">
+            <button class="btn btn-sm btn-danger" type="submit">Discharge</button>
+          </form>
+        {% endif %}
+      </td>
+    </tr>
+    {% endfor %}
+  </table></div>
+</div>
+
+{% endblock %}

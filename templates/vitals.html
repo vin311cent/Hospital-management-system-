@@ -1,0 +1,49 @@
+{% extends "base.html" %}
+{% block title %}Record Vitals{% endblock %}
+{% block heading %}Record Vitals{% endblock %}
+{% block content %}
+
+<div class="section">
+  <p class="section-title">Record Vitals — Ward Round</p>
+  <div class="card">
+    <form method="post">
+      <div class="form-grid">
+        <div style="grid-column:1/-1">
+          <label>Patient</label>
+          <select name="patient_id" required>
+            <option value="">Select patient…</option>
+            {% for p in patients %}
+              <option value="{{ p.id }}">#{{ p.id }} — {{ p.full_name }}</option>
+            {% endfor %}
+          </select>
+        </div>
+        <div><label>Temperature (°C)</label><input name="temperature" placeholder="e.g. 36.8"></div>
+        <div><label>Blood Pressure</label><input name="blood_pressure" placeholder="e.g. 118/76"></div>
+        <div><label>Pulse (bpm)</label><input name="pulse" placeholder="e.g. 72"></div>
+        <div style="grid-column:1/-1"><label>Notes</label><textarea name="notes" placeholder="Any observations…"></textarea></div>
+      </div>
+      <button class="btn" style="margin-top:14px" type="submit">Save Vitals</button>
+    </form>
+  </div>
+</div>
+
+<div class="section">
+  <p class="section-title">Recently Recorded</p>
+  <div class="table-wrap"><table>
+    <tr><th>Time</th><th>Patient</th><th>Temp</th><th>BP</th><th>Pulse</th><th>Notes</th></tr>
+    {% for r in recent %}
+    <tr>
+      <td>{{ r.created_at }}</td>
+      <td>{{ r.patient_name }}</td>
+      <td>{{ r.temperature }}</td>
+      <td>{{ r.blood_pressure }}</td>
+      <td>{{ r.pulse }}</td>
+      <td>{{ r.notes }}</td>
+    </tr>
+    {% else %}
+    <tr><td colspan="6" class="muted">No vitals recorded yet.</td></tr>
+    {% endfor %}
+  </table></div>
+</div>
+
+{% endblock %}

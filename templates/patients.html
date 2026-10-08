@@ -1,0 +1,55 @@
+{% extends "base.html" %}
+{% block title %}Patients{% endblock %}
+{% block heading %}Patients{% endblock %}
+{% block content %}
+
+<div class="section">
+  <p class="section-title">Register New Patient</p>
+  <div class="card">
+    <form method="post">
+      <input type="hidden" name="action" value="create">
+      <div class="form-grid">
+        <div><label>Full Name</label><input name="full_name" required></div>
+        <div><label>Date of Birth</label><input type="date" name="dob"></div>
+        <div><label>Gender</label>
+          <select name="gender"><option value="">Select…</option><option>Male</option><option>Female</option></select>
+        </div>
+        <div><label>Phone</label><input name="phone" required></div>
+        <div style="grid-column:1/-1"><label>Address</label><input name="address"></div>
+        <div><label>Next of Kin Name</label><input name="next_of_kin_name"></div>
+        <div><label>Next of Kin Phone</label><input name="next_of_kin_phone"></div>
+      </div>
+      <button class="btn" style="margin-top:14px" type="submit">Register Patient</button>
+    </form>
+  </div> 
+</div>
+
+<div class="section">
+  <div class="flex-between">
+    <p class="section-title mb-0">Patient Directory</p>
+    <form method="get" class="search-box">
+      <input type="text" name="q" placeholder="Search by name, phone or ID…" value="{{ term }}">
+    </form>
+  </div>
+  <div class="table-wrap"><table>
+    <tr><th>ID</th><th>Name</th><th>DOB</th><th>Gender</th><th>Phone</th><th>Next of Kin</th><th></th></tr>
+    {% for p in patients %}
+    <tr>
+      <td>#{{ p.id }}</td>
+      <td>{{ p.full_name }}</td>
+      <td>{{ p.dob }}</td>
+      <td>{{ p.gender }}</td>
+      <td>{{ p.phone }}</td>
+      <td>{{ p.next_of_kin_name }}{% if p.next_of_kin_phone %} ({{ p.next_of_kin_phone }}){% endif %}</td>
+      <td class="actions">
+        <a class="btn btn-sm btn-outline" href="{{ url_for('patient_view', patient_id=p.id) }}">View</a>
+        <a class="btn btn-sm btn-danger" href="{{ url_for('deactivate_patient', patient_id=p.id) }}" onclick="return confirm('Deactivate this patient record?')">Deactivate</a>
+      </td>
+    </tr>
+    {% else %}
+    <tr><td colspan="7" class="muted">No patients found.</td></tr>
+    {% endfor %}
+  </table></div>
+</div>
+
+{% endblock %}

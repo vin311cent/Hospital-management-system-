@@ -1,0 +1,26 @@
+{% extends "base.html" %}
+{% block title %}Audit Log{% endblock %}
+{% block heading %}Audit Log{% endblock %}
+{% block content %}
+
+<p class="muted">Every create, update and access-sensitive action in the system is recorded here with the acting user and a timestamp, satisfying the audit-trail requirement for patient-record integrity.</p>
+
+<div class="section">
+  <div class="table-wrap"><table>
+    <tr><th>When</th><th>User</th><th>Action</th><th>Entity</th><th>Entity ID</th><th>Details</th></tr>
+    {% for log in logs %}
+    <tr>
+      <td>{{ log.created_at }}</td>
+      <td>{{ log.user_name or 'System' }}</td>
+      <td>{{ log.action }}</td>
+      <td>{{ log.entity }}</td>
+      <td>{{ log.entity_id }}</td>
+      <td>{{ log.details }}</td>
+    </tr>
+    {% else %}
+    <tr><td colspan="6" class="muted">No activity recorded yet.</td></tr>
+    {% endfor %}
+  </table></div>
+</div>
+
+{% endblock %}

@@ -1,0 +1,57 @@
+{% extends "base.html" %}
+{% block title %}Lab Requests{% endblock %}
+{% block heading %}Lab Requests{% endblock %}
+{% block content %}
+
+{% if role == 'doctor' %}
+<div class="section">
+  <p class="section-title">Request a Lab Test</p>
+  <div class="card">
+    <form method="post">
+      <input type="hidden" name="action" value="request">
+      <div class="form-grid">
+        <div>
+          <label>Patient</label>
+          <select name="patient_id" required>
+            <option value="">Select patient…</option>
+            {% for p in patients %}
+              <option value="{{ p.id }}">#{{ p.id }} — {{ p.full_name }}</option>
+            {% endfor %}
+          </select>
+        </div>
+        <div><label>Test Name</label><input name="test_name" placeholder="e.g. Full Blood Count" required></div>
+      </div>
+      <button class="btn" style="margin-top:14px" type="submit">Request Test</button>
+    </form>
+  </div>
+</div>
+{% endif %}
+
+<div class="section">
+  <p class="section-title">Pending Lab Requests</p>
+  <div class="table-wrap"><table>
+    <tr><th>Requested</th><th>Patient</th><th>Doctor</th><th>Test</th>{% if role == 'lab_technician' %}<th>Upload Result</th>{% endif %}</tr>
+    {% for l in pending %}
+    <tr>
+      <td>{{ l.requested_at }}</td>
+      <td>{{ l.patient_name }}</td>
+      <td>{{ l.doctor_name }}</td>
+      <td>{{ l.test_name }}</td>
+      {% if role == 'lab_technician' %}
+      <td>
+        <form method="post" class="flex-between">
+          <input type="hidden" name="action" value="complete">
+          <input type="hidden" name="request_id" value="{{ l.id }}">
+          <input name="result" placeholder="Enter result…" required style="flex:1">
+          <button class="btn btn-sm" type="submit">Submit</button>
+        </form>
+      </td>
+      {% endif %}
+    </tr>
+    {% else %}
+    <tr><td colspan="5" class="muted">No pending lab requests.</td></tr>
+    {% endfor %}
+  </table></div>
+</div>
+
+{% endblock %}

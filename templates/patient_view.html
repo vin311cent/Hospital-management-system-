@@ -1,0 +1,99 @@
+{% extends "base.html" %}
+{% block title %}Patient — {{ patient.full_name }}{% endblock %}
+{% block heading %}Patient — {{ patient.full_name }}{% endblock %}
+{% block content %}
+
+<div class="card section">
+  <div class="flex-between">
+    <div>
+      <h2 style="margin:0 0 4px;color:var(--navy)">{{ patient.full_name }} <span class="muted">#{{ patient.id }}</span></h2>
+      <div class="muted">DOB: {{ patient.dob or '—' }} · Gender: {{ patient.gender or '—' }} · Phone: {{ patient.phone or '—' }}</div>
+      <div class="muted">Address: {{ patient.address or '—' }}</div>
+      <div class="muted">Next of kin: {{ patient.next_of_kin_name or '—' }} ({{ patient.next_of_kin_phone or '—' }})</div>
+    </div>
+    {% if current_role == 'doctor' %}
+      <a class="btn" href="{{ url_for('records_page', patient_id=patient.id) }}">+ Add Medical Record</a>
+    {% endif %}
+  </div>
+</div>
+
+<div class="section">
+  <p class="section-title">Medical Records</p>
+  <div class="table-wrap"><table>
+    <tr><th>Date</th><th>Doctor</th><th>Diagnosis</th><th>Notes</th><th>Vitals</th></tr>
+    {% for r in records %}
+    <tr>
+      <td>{{ r.created_at }}</td>
+      <td>{{ r.doctor_name }}</td>
+      <td>{{ r.diagnosis }}</td>
+      <td>{{ r.notes }}</td>
+      <td class="muted">
+        {% if r.temperature %}Temp: {{ r.temperature }} {% endif %}
+        {% if r.blood_pressure %}BP: {{ r.blood_pressure }} {% endif %}
+        {% if r.pulse %}Pulse: {{ r.pulse }}{% endif %}
+      </td>
+    </tr>
+    {% else %}
+    <tr><td colspan="5" class="muted">No medical records yet.</td></tr>
+    {% endfor %}
+  </table></div>
+</div>
+
+<div class="section">
+  <p class="section-title">Prescriptions</p>
+  <div class="table-wrap"><table>
+    <tr><th>Date</th><th>Doctor</th><th>Medicine</th><th>Dosage</th><th>Qty</th><th>Status</th></tr>
+    {% for p in prescriptions %}
+    <tr>
+      <td>{{ p.created_at }}</td>
+      <td>{{ p.doctor_name }}</td>
+      <td>{{ p.medicine_name }}</td>
+      <td>{{ p.dosage }} · {{ p.frequency }} · {{ p.duration }}</td>
+      <td>{{ p.quantity }}</td>
+      <td><span class="badge badge-{{ p.status }}">{{ p.status|capitalize }}</span></td>
+    </tr>
+    {% else %}
+    <tr><td colspan="6" class="muted">No prescriptions yet.</td></tr>
+    {% endfor %}
+  </table></div>
+</div>
+
+<div class="section">
+  <p class="section-title">Lab Requests</p>
+  <div class="table-wrap"><table>
+    <tr><th>Requested</th><th>Doctor</th><th>Test</th><th>Status</th><th>Result</th></tr>
+    {% for l in labs %}
+    <tr>
+      <td>{{ l.requested_at }}</td>
+      <td>{{ l.doctor_name }}</td>
+      <td>{{ l.test_name }}</td>
+      <td><span class="badge badge-{{ l.status }}">{{ l.status|capitalize }}</span></td>
+      <td>{{ l.result or '—' }}</td>
+    </tr>
+    {% else %}
+    <tr><td colspan="5" class="muted">No lab requests yet.</td></tr>
+    {% endfor %}
+  </table></div>
+</div>
+
+<div class="section">
+  <p class="section-title">Billing</p>
+  {% for bill in bills %}
+  <div class="card" style="margin-bottom:12px">
+    <div class="flex-between">
+      <strong>Bill #{{ bill.id }} — {{ bill.created_at }}</strong>
+      <span class="badge badge-{{ bill.status }}">{{ bill.status|capitalize }}</span>
+    </div>
+    <table style="margin-top:10px">
+      {% for item in bill.line_items %}
+        <tr><td>{{ item.description }}</td><td style="text-align:right">{{ item.amount|money }}</td></tr>
+      {% endfor %}
+      <tr><td><strong>Total</strong></td><td style="text-align:right"><strong>{{ bill.total|money }}</strong></td></tr>
+    </table>
+  </div>
+  {% else %}
+  <p class="muted">No bills on record.</p>
+  {% endfor %}
+</div>
+
+{% endblock %}

@@ -1,0 +1,32 @@
+{% extends "base.html" %}
+{% block title %}Login{% endblock %}
+{% block auth_content %}
+<div class="auth-card">
+  <h1>🏥 {{ app_name }}</h1>
+  <div class="sub">Hospital Management System — sign in to continue</div>
+  {% if error %}<div class="alert alert-error">{{ error }}</div>{% endif %}
+  <form method="post">
+    <div class="form-grid single">
+      <div>
+        <label>Email</label>
+        <input type="email" name="email" required autofocus value="{{ request.form.get('email', '') }}">
+      </div>
+      <div>
+        <label>Password</label>
+        <input type="password" name="password" required>
+      </div>
+    </div>
+    <button class="btn" style="width:100%;margin-top:16px;" type="submit">Log In</button>
+  </form>
+  <div class="demo-box">
+    <strong>Demo accounts</strong> (password: <code>password123</code>)<br>
+    Admin — admin@medicare.zm<br>
+    Doctor — chanda.mwansa@medicare.zm<br>
+    Nurse — grace.tembo@medicare.zm<br>
+    Receptionist — mercy.banda@medicare.zm<br>
+    Pharmacist — joseph.lungu@medicare.zm<br>
+    Lab Technician — patricia.mulenga@medicare.zm<br>
+    Patient — john.zulu@medicare.zm
+  </div>
+</div>
+{% endblock %}

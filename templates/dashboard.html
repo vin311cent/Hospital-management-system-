@@ -1,0 +1,101 @@
+{% extends "base.html" %}
+{% block title %}Dashboard{% endblock %}
+{% block heading %}Dashboard{% endblock %}
+{% block content %}
+
+{% if current_role == 'admin' %}
+  <div class="grid grid-4 section">
+    <div class="card stat-card"><div class="stat-number">{{ total_patients }}</div><div class="stat-label">Active Patients</div></div>
+    <div class="card stat-card"><div class="stat-number">{{ today_appts }}</div><div class="stat-label">Appointments Today</div></div>
+    <div class="card stat-card {{ 'danger' if occupied_beds == total_beds and total_beds > 0 }}"><div class="stat-number">{{ occupied_beds }}/{{ total_beds }}</div><div class="stat-label">Beds Occupied</div></div>
+    <div class="card stat-card {{ 'warn' if low_stock > 0 }}"><div class="stat-number">{{ low_stock }}</div><div class="stat-label">Medicines Low on Stock</div></div>
+  </div>
+  <div class="section">
+    <div class="card"><div class="stat-label">Total Unpaid Billing</div><div class="stat-number" style="color:var(--danger)">{{ unpaid_total|money }}</div></div>
+  </div>
+  <div class="section">
+    <p class="section-title">Recent Activity</p>
+    <div class="table-wrap"><table>
+      <tr><th>When</th><th>User</th><th>Action</th><th>Entity</th><th>Details</th></tr>
+      {% for log in recent_logs %}
+      <tr>
+        <td>{{ log.created_at }}</td>
+        <td>{{ log.user_name or 'System' }}</td>
+        <td>{{ log.action }}</td>
+        <td>{{ log.entity }}</td>
+        <td>{{ log.details }}</td>
+      </tr>
+      {% endfor %}
+    </table></div>
+  </div>
+
+{% elif current_role == 'doctor' %}
+  <div class="section">
+    <p class="section-title">Today's Appointments</p>
+    {% if not today_appts %}<p class="muted">No appointments scheduled for today.</p>
+    {% else %}
+    <div class="table-wrap"><table>
+      <tr><th>Time</th><th>Patient</th><th>Reason</th><th>Status</th><th></th></tr>
+      {% for a in today_appts %}
+      <tr>
+        <td>{{ a.appointment_time }}</td>
+        <td>{{ a.patient_name }}</td>
+        <td>{{ a.reason }}</td>
+        <td><span class="badge badge-{{ a.status }}">{{ a.status|capitalize }}</span></td>
+        <td><a class="btn btn-sm btn-outline" href="{{ url_for('records_page', patient_id=a.patient_id) }}">Open Chart</a></td>
+      </tr>
+      {% endfor %}
+    </table></div>
+    {% endif %}
+  </div>
+  <div class="grid grid-2 section">
+    <a class="card" href="{{ url_for('patients_page') }}" style="display:block"><strong>🔍 Look Up a Patient</strong><div class="muted">Search records and open a chart</div></a>
+    <a class="card" href="{{ url_for('lab_page') }}" style="display:block"><strong>🧪 Lab Requests</strong><div class="muted">Order tests and view results</div></a>
+  </div>
+
+{% elif current_role == 'nurse' %}
+  <div class="grid grid-2 section">
+    <a class="card" href="{{ url_for('vitals_page') }}" style="display:block"><strong>🩺 Record Vitals</strong><div class="muted">Log observations during ward rounds</div></a>
+    <a class="card" href="{{ url_for('wards_page') }}" style="display:block"><strong>🛏️ Wards &amp; Beds</strong><div class="muted">View bed occupancy across the hospital</div></a>
+  </div>
+
+{% elif current_role == 'receptionist' %}
+  <div class="grid grid-3 section">
+    <div class="card stat-card"><div class="stat-number">{{ today_appts }}</div><div class="stat-label">Appointments Today</div></div>
+    <a class="card" href="{{ url_for('patients_page') }}" style="display:block"><strong>➕ Register Patient</strong><div class="muted">Add a new patient record</div></a>
+    <a class="card" href="{{ url_for('appointments_page') }}" style="display:block"><strong>📅 Book Appointment</strong><div class="muted">Schedule with an available doctor</div></a>
+  </div>
+
+{% elif current_role == 'pharmacist' %}
+  <div class="grid grid-2 section">
+    <div class="card stat-card {{ 'warn' if pending|length }}"><div class="stat-number">{{ pending|length }}</div><div class="stat-label">Pending Prescriptions</div></div>
+    <div class="card stat-card {{ 'danger' if low_stock|length }}"><div class="stat-number">{{ low_stock|length }}</div><div class="stat-label">Medicines Low on Stock</div></div>
+  </div>
+  {% if low_stock %}
+  <div class="section">
+    <p class="section-title">⚠ Reorder Alert</p>
+    <div class="table-wrap"><table>
+      <tr><th>Medicine</th><th>Stock</th><th>Reorder Level</th></tr>
+      {% for m in low_stock %}
+      <tr><td>{{ m.name }}</td><td>{{ m.stock_qty }}</td><td>{{ m.reorder_level }}</td></tr>
+      {% endfor %}
+    </table></div>
+  </div>
+  {% endif %}
+  <p><a class="btn" href="{{ url_for('pharmacy_page') }}">Go to Pharmacy Queue</a></p>
+
+{% elif current_role == 'lab_technician' %}
+  <div class="grid grid-2 section">
+    <div class="card stat-card {{ 'warn' if pending|length }}"><div class="stat-number">{{ pending|length }}</div><div class="stat-label">Pending Lab Requests</div></div>
+    <a class="card" href="{{ url_for('lab_page') }}" style="display:block"><strong>🧪 Open Lab Queue</strong><div class="muted">Upload results for requested tests</div></a>
+  </div>
+
+{% elif current_role == 'patient' %}
+  <div class="grid grid-2 section">
+    <a class="card" href="{{ url_for('appointments_page') }}" style="display:block"><strong>📅 My Appointments</strong><div class="muted">{{ upcoming_count }} upcoming</div></a>
+    <a class="card" href="{{ url_for('my_records') }}" style="display:block"><strong>📋 My Health Record</strong><div class="muted">Diagnoses, prescriptions &amp; lab results</div></a>
+    <a class="card" href="{{ url_for('my_bills') }}" style="display:block"><strong>💳 My Bills</strong><div class="muted">View statements and balances</div></a>
+  </div>
+{% endif %}
+
+{% endblock %}

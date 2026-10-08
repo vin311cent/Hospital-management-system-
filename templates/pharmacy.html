@@ -1,0 +1,79 @@
+{% extends "base.html" %}
+{% block title %}Pharmacy{% endblock %}
+{% block heading %}Pharmacy{% endblock %}
+{% block content %}
+
+{% if low_stock %}
+<div class="alert alert-error">
+  ⚠ {{ low_stock|length }} medicine(s) at or below reorder level: {{ low_stock|map(attribute='name')|join(', ') }}
+</div>
+{% endif %}
+
+<div class="section">
+  <p class="section-title">Pending Prescriptions</p>
+  <div class="table-wrap"><table>
+    <tr><th>Date</th><th>Patient</th><th>Doctor</th><th>Medicine</th><th>Dosage</th><th>Qty</th><th></th></tr>
+    {% for p in pending %}
+    <tr>
+      <td>{{ p.created_at }}</td>
+      <td>{{ p.patient_name }}</td>
+      <td>{{ p.doctor_name }}</td>
+      <td>{{ p.medicine_name }}</td>
+      <td>{{ p.dosage }} · {{ p.frequency }} · {{ p.duration }}</td>
+      <td>{{ p.quantity }}</td>
+      <td>
+        <form method="post">
+          <input type="hidden" name="action" value="dispense">
+          <input type="hidden" name="prescription_id" value="{{ p.id }}">
+          <button class="btn btn-sm" type="submit">Dispense</button>
+        </form>
+      </td>
+    </tr>
+    {% else %}
+    <tr><td colspan="7" class="muted">No pending prescriptions.</td></tr>
+    {% endfor %}
+  </table></div>
+</div>
+
+<div class="grid grid-2 section">
+  <div>
+    <p class="section-title">Inventory</p>
+    <div class="table-wrap"><table>
+      <tr><th>Medicine</th><th>Stock</th><th>Reorder Level</th><th>Unit Price</th><th>Restock</th></tr>
+      {% for m in medicines %}
+      <tr>
+        <td>{{ m.name }}</td>
+        <td>{{ m.stock_qty }} {% if m.stock_qty <= m.reorder_level %}<span class="badge badge-danger">Low</span>{% endif %}</td>
+        <td>{{ m.reorder_level }}</td>
+        <td>{{ m.unit_price|money }}</td>
+        <td>
+          <form method="post" class="flex-between">
+            <input type="hidden" name="action" value="restock">
+            <input type="hidden" name="medicine_id" value="{{ m.id }}">
+            <input type="number" name="quantity" min="1" value="50" style="width:80px">
+            <button class="btn btn-sm btn-outline" type="submit">Add</button>
+          </form>
+        </td>
+      </tr>
+      {% endfor %}
+    </table></div>
+  </div>
+  <div>
+    <p class="section-title">Add New Medicine</p>
+    <div class="card">
+      <form method="post">
+        <input type="hidden" name="action" value="add_medicine">
+        <label>Name</label><input name="name" required>
+        <div class="form-grid" style="margin-top:8px">
+          <div><label>Starting Stock</label><input type="number" name="stock_qty" min="0" value="0" required></div>
+          <div><label>Reorder Level</label><input type="number" name="reorder_level" min="0" value="10" required></div>
+        </div>
+        <label style="margin-top:8px">Unit Price (K)</label>
+        <input type="number" step="0.01" name="unit_price" min="0" value="0" required>
+        <button class="btn" style="margin-top:14px" type="submit">Add Medicine</button>
+      </form>
+    </div>
+  </div>
+</div>
+
+{% endblock %}

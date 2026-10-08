@@ -1,0 +1,33 @@
+{% extends "base.html" %}
+{% block title %}My Bills{% endblock %}
+{% block heading %}My Bills{% endblock %}
+{% block content %}
+
+{% if not patient %}
+<p class="muted">No patient record is linked to your account yet. Please contact reception.</p>
+{% else %}
+
+<div class="card section">
+  <div class="stat-label">Outstanding Balance</div>
+  <div class="stat-number" style="color:{{ 'var(--danger)' if total_owed > 0 else 'var(--ok)' }}">{{ total_owed|money }}</div>
+</div>
+
+{% for bill in bills %}
+<div class="card section">
+  <div class="flex-between">
+    <strong>Bill #{{ bill.id }} — {{ bill.created_at }}</strong>
+    <span class="badge badge-{{ bill.status }}">{{ bill.status|capitalize }}</span>
+  </div>
+  <table style="margin-top:10px">
+    {% for item in bill.line_items %}
+      <tr><td>{{ item.description }}</td><td style="text-align:right">{{ item.amount|money }}</td></tr>
+    {% endfor %}
+    <tr><td><strong>Total</strong></td><td style="text-align:right"><strong>{{ bill.total|money }}</strong></td></tr>
+  </table>
+</div>
+{% else %}
+<p class="muted">You have no billing history yet.</p>
+{% endfor %}
+
+{% endif %}
+{% endblock %}
