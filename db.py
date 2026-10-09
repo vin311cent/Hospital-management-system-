@@ -4,7 +4,6 @@ for the MediCare HMS Flask port.
 """
 import sqlite3
 import os
-from datetime import datetime
 from flask import g, current_app
 
 
@@ -17,7 +16,7 @@ def get_db():
     return g.db
 
 
-def close_db(e=None):
+def close_db(_error=None):
     db = g.pop("db", None)
     if db is not None:
         db.close()
@@ -151,6 +150,29 @@ CREATE TABLE audit_log (
     details TEXT,
     created_at TEXT NOT NULL DEFAULT (datetime('now'))
 );
+
+CREATE TABLE triage_records (
+    id INTEGER PRIMARY KEY AUTOINCREMENT,
+    patient_id INTEGER NOT NULL REFERENCES patients(id) ON DELETE CASCADE,
+    nurse_id INTEGER NOT NULL REFERENCES users(id),
+    priority TEXT NOT NULL CHECK(priority IN ('routine','priority','urgent','immediate')),
+    assessment TEXT NOT NULL,
+    temperature TEXT,
+    blood_pressure TEXT,
+    pulse TEXT,
+    status TEXT NOT NULL DEFAULT 'active' CHECK(status IN ('active','resolved')),
+    created_at TEXT NOT NULL DEFAULT (datetime('now')),
+    resolved_at TEXT
+);
+
+CREATE TABLE notifications (
+    id INTEGER PRIMARY KEY AUTOINCREMENT,
+    user_id INTEGER NOT NULL REFERENCES users(id) ON DELETE CASCADE,
+    title TEXT NOT NULL,
+    message TEXT NOT NULL,
+    is_read INTEGER NOT NULL DEFAULT 0,
+    created_at TEXT NOT NULL DEFAULT (datetime('now'))
+);
 """
 
 
@@ -219,7 +241,7 @@ def _seed(db):
 
 
 def init_db(app):
-    """Create the schema + seed demo data if the database file doesn't exist yet."""
+    """Create/seed new databases and apply additive schema upgrades."""
     db_path = app.config["DATABASE"]
     is_new = not os.path.exists(db_path)
     os.makedirs(os.path.dirname(db_path), exist_ok=True)
@@ -229,5 +251,31 @@ def init_db(app):
     if is_new:
         conn.executescript(SCHEMA)
         _seed(conn)
-        conn.commit()
+    else:
+        conn.executescript(
+            """
+            CREATE TABLE IF NOT EXISTS triage_records (
+                id INTEGER PRIMARY KEY AUTOINCREMENT,
+                patient_id INTEGER NOT NULL REFERENCES patients(id) ON DELETE CASCADE,
+                nurse_id INTEGER NOT NULL REFERENCES users(id),
+                priority TEXT NOT NULL CHECK(priority IN ('routine','priority','urgent','immediate')),
+                assessment TEXT NOT NULL,
+                temperature TEXT,
+                blood_pressure TEXT,
+                pulse TEXT,
+                status TEXT NOT NULL DEFAULT 'active' CHECK(status IN ('active','resolved')),
+                created_at TEXT NOT NULL DEFAULT (datetime('now')),
+                resolved_at TEXT
+            );
+            CREATE TABLE IF NOT EXISTS notifications (
+                id INTEGER PRIMARY KEY AUTOINCREMENT,
+                user_id INTEGER NOT NULL REFERENCES users(id) ON DELETE CASCADE,
+                title TEXT NOT NULL,
+                message TEXT NOT NULL,
+                is_read INTEGER NOT NULL DEFAULT 0,
+                created_at TEXT NOT NULL DEFAULT (datetime('now'))
+            );
+            """
+        )
+    conn.commit()
     conn.close()
