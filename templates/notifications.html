@@ -1,0 +1,35 @@
+{% extends "base.html" %}
+{% block title %}Notifications{% endblock %}
+{% block heading %}Notifications{% endblock %}
+{% block content %}
+<div class="section">
+  <div class="card">
+    <form method="post">
+      <div class="form-grid">
+        <div style="grid-column:1/-1"><label>Announcement Title</label><input name="title" placeholder="Maintenance or update" required></div>
+        <div style="grid-column:1/-1"><label>Message</label><textarea name="message" placeholder="Share an update with all active users" required></textarea></div>
+      </div>
+      <button class="btn" type="submit">Broadcast</button>
+    </form>
+  </div>
+</div>
+
+<div class="section">
+  <p class="section-title">Your Notifications</p>
+  <div class="table-wrap">
+    <table>
+      <tr><th>Time</th><th>Title</th><th>Message</th><th>Read</th></tr>
+      {% for n in notifications %}
+      <tr>
+        <td>{{ n.created_at }}</td>
+        <td>{{ n.title }}</td>
+        <td>{{ n.message }}</td>
+        <td>{% if n.is_read %}Yes{% else %}<form method="post" action="{{ url_for('mark_notification_read', notification_id=n.id) }}"><button class="btn btn-small" type="submit">Mark read</button></form>{% endif %}</td>
+      </tr>
+      {% else %}
+      <tr><td colspan="4" class="muted">No notifications yet.</td></tr>
+      {% endfor %}
+    </table>
+  </div>
+</div>
+{% endblock %}

@@ -31,6 +31,10 @@
       {% endif %}
       {% if current_role == 'nurse' %}
         <a href="{{ url_for('vitals_page') }}" class="{{ 'active' if request.endpoint == 'vitals_page' }}">Record Vitals</a>
+        <a href="{{ url_for('triage_page') }}" class="{{ 'active' if request.endpoint == 'triage_page' }}">Triage</a>
+      {% endif %}
+      {% if current_user %}
+        <a href="{{ url_for('notifications_page') }}" class="{{ 'active' if request.endpoint == 'notifications_page' }}">Notifications{% if unread_notifications %} ({{ unread_notifications }}){% endif %}</a>
       {% endif %}
       {% if current_role in ['admin', 'pharmacist'] %}
         <a href="{{ url_for('pharmacy_page') }}" class="{{ 'active' if request.endpoint == 'pharmacy_page' }}">Pharmacy</a>
