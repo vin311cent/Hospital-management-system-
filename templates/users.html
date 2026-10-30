@@ -7,6 +7,7 @@
   <p class="section-title">Create Account</p>
   <div class="card">
     <form method="post">
+      <input type="hidden" name="_csrf_token" value="{{ csrf_token }}">
       <input type="hidden" name="action" value="create">
       <div class="form-grid">
         <div><label>Full Name</label><input name="name" required></div>
@@ -45,9 +46,15 @@
       <td>{% if u.is_active %}<span class="badge badge-ok">Active</span>{% else %}<span class="badge badge-danger">Inactive</span>{% endif %}</td>
       <td class="actions">
         {% if u.is_active %}
-          <a class="btn btn-sm btn-danger" href="{{ url_for('deactivate_user', user_id=u.id) }}" onclick="return confirm('Deactivate this account?')">Deactivate</a>
+          <form method="post" action="{{ url_for('deactivate_user', user_id=u.id) }}" style="display:inline" onsubmit="return confirm('Deactivate this account?')">
+            <input type="hidden" name="_csrf_token" value="{{ csrf_token }}">
+            <button class="btn btn-sm btn-danger" type="submit">Deactivate</button>
+          </form>
         {% else %}
-          <a class="btn btn-sm btn-outline" href="{{ url_for('activate_user', user_id=u.id) }}">Reactivate</a>
+          <form method="post" action="{{ url_for('activate_user', user_id=u.id) }}" style="display:inline">
+            <input type="hidden" name="_csrf_token" value="{{ csrf_token }}">
+            <button class="btn btn-sm btn-outline" type="submit">Reactivate</button>
+          </form>
         {% endif %}
       </td>
     </tr>

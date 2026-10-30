@@ -6,6 +6,7 @@
   <div class="sub">Hospital Management System — sign in to continue</div>
   {% if error %}<div class="alert alert-error">{{ error }}</div>{% endif %}
   <form method="post">
+    <input type="hidden" name="_csrf_token" value="{{ csrf_token }}">
     <div class="form-grid single">
       <div>
         <label>Email</label>

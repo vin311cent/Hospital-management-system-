@@ -25,6 +25,7 @@
   <div class="card">
     <p class="section-title">Add Diagnosis / Consultation Note</p>
     <form method="post">
+      <input type="hidden" name="_csrf_token" value="{{ csrf_token }}">
       <input type="hidden" name="action" value="add_record">
       <input type="hidden" name="patient_id" value="{{ patient_id }}">
       <label>Diagnosis</label>
@@ -43,6 +44,7 @@
   <div class="card">
     <p class="section-title">Issue Prescription</p>
     <form method="post">
+      <input type="hidden" name="_csrf_token" value="{{ csrf_token }}">
       <input type="hidden" name="action" value="prescribe">
       <input type="hidden" name="patient_id" value="{{ patient_id }}">
       {% if records %}

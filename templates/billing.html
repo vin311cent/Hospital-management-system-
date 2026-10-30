@@ -23,7 +23,10 @@
       <td><span class="badge badge-{{ b.status }}">{{ b.status|capitalize }}</span></td>
       <td>
         {% if b.status == 'unpaid' %}
-          <a class="btn btn-sm" href="{{ url_for('mark_bill_paid', bill_id=b.id) }}">Mark Paid</a>
+          <form method="post" action="{{ url_for('mark_bill_paid', bill_id=b.id) }}">
+            <input type="hidden" name="_csrf_token" value="{{ csrf_token }}">
+            <button class="btn btn-sm" type="submit">Mark Paid</button>
+          </form>
         {% endif %}
       </td>
     </tr>

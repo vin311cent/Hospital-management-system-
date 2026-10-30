@@ -55,7 +55,10 @@
         <a href="{{ url_for('audit_log_page') }}" class="{{ 'active' if request.endpoint == 'audit_log_page' }}">Audit Log</a>
       {% endif %}
     </nav>
-    <a href="{{ url_for('logout') }}" class="logout-link">Log out</a>
+    <form method="post" action="{{ url_for('logout') }}">
+      <input type="hidden" name="_csrf_token" value="{{ csrf_token }}">
+      <button class="logout-link" type="submit">Log out</button>
+    </form>
   </aside>
   <main class="content">
     <div class="topbar"><h1>{% block heading %}{% endblock %}</h1></div>

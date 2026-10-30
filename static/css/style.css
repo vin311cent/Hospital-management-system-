@@ -114,12 +114,17 @@ a { text-decoration: none; color: inherit; }
   font-weight: 600;
 }
 .logout-link {
+  width: calc(100% - 40px);
   margin: 14px 20px 0;
   padding: 10px 0;
   text-align: center;
   border: 1px solid rgba(255,255,255,0.25);
+  background: transparent;
+  color: #cfe0f2;
   border-radius: 6px;
   font-size: 13.5px;
+  cursor: pointer;
+  font-family: inherit;
 }
 .logout-link:hover { 
   background: rgba(255,255,255,0.08); 

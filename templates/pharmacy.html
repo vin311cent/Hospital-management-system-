@@ -23,6 +23,7 @@
       <td>{{ p.quantity }}</td>
       <td>
         <form method="post">
+          <input type="hidden" name="_csrf_token" value="{{ csrf_token }}">
           <input type="hidden" name="action" value="dispense">
           <input type="hidden" name="prescription_id" value="{{ p.id }}">
           <button class="btn btn-sm" type="submit">Dispense</button>
@@ -48,6 +49,7 @@
         <td>{{ m.unit_price|money }}</td>
         <td>
           <form method="post" class="flex-between">
+            <input type="hidden" name="_csrf_token" value="{{ csrf_token }}">
             <input type="hidden" name="action" value="restock">
             <input type="hidden" name="medicine_id" value="{{ m.id }}">
             <input type="number" name="quantity" min="1" value="50" style="width:80px">
@@ -62,6 +64,7 @@
     <p class="section-title">Add New Medicine</p>
     <div class="card">
       <form method="post">
+        <input type="hidden" name="_csrf_token" value="{{ csrf_token }}">
         <input type="hidden" name="action" value="add_medicine">
         <label>Name</label><input name="name" required>
         <div class="form-grid" style="margin-top:8px">

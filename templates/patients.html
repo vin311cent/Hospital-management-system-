@@ -7,6 +7,7 @@
   <p class="section-title">Register New Patient</p>
   <div class="card">
     <form method="post">
+      <input type="hidden" name="_csrf_token" value="{{ csrf_token }}">
       <input type="hidden" name="action" value="create">
       <div class="form-grid">
         <div><label>Full Name</label><input name="full_name" required></div>
@@ -43,7 +44,10 @@
       <td>{{ p.next_of_kin_name }}{% if p.next_of_kin_phone %} ({{ p.next_of_kin_phone }}){% endif %}</td>
       <td class="actions">
         <a class="btn btn-sm btn-outline" href="{{ url_for('patient_view', patient_id=p.id) }}">View</a>
-        <a class="btn btn-sm btn-danger" href="{{ url_for('deactivate_patient', patient_id=p.id) }}" onclick="return confirm('Deactivate this patient record?')">Deactivate</a>
+        <form method="post" action="{{ url_for('deactivate_patient', patient_id=p.id) }}" style="display:inline" onsubmit="return confirm('Deactivate this patient record?')">
+          <input type="hidden" name="_csrf_token" value="{{ csrf_token }}">
+          <button class="btn btn-sm btn-danger" type="submit">Deactivate</button>
+        </form>
       </td>
     </tr>
     {% else %}

@@ -8,6 +8,7 @@
   <p class="section-title">Book Appointment</p>
   <div class="card">
     <form method="post">
+      <input type="hidden" name="_csrf_token" value="{{ csrf_token }}">
       <input type="hidden" name="action" value="book">
       <div class="form-grid">
         {% if current_role != 'patient' %}
@@ -62,9 +63,15 @@
       <td class="actions">
         {% if a.status == 'scheduled' %}
           {% if current_role == 'doctor' %}
-            <a class="btn btn-sm" href="{{ url_for('complete_appointment', appointment_id=a.id) }}">Mark Completed</a>
+            <form method="post" action="{{ url_for('complete_appointment', appointment_id=a.id) }}" style="display:inline">
+              <input type="hidden" name="_csrf_token" value="{{ csrf_token }}">
+              <button class="btn btn-sm" type="submit">Mark Completed</button>
+            </form>
           {% endif %}
-          <a class="btn btn-sm btn-danger" href="{{ url_for('cancel_appointment', appointment_id=a.id) }}" onclick="return confirm('Cancel this appointment?')">Cancel</a>
+          <form method="post" action="{{ url_for('cancel_appointment', appointment_id=a.id) }}" style="display:inline" onsubmit="return confirm('Cancel this appointment?')">
+            <input type="hidden" name="_csrf_token" value="{{ csrf_token }}">
+            <button class="btn btn-sm btn-danger" type="submit">Cancel</button>
+          </form>
         {% endif %}
       </td>
     </tr>

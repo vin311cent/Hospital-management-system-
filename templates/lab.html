@@ -8,6 +8,7 @@
   <p class="section-title">Request a Lab Test</p>
   <div class="card">
     <form method="post">
+      <input type="hidden" name="_csrf_token" value="{{ csrf_token }}">
       <input type="hidden" name="action" value="request">
       <div class="form-grid">
         <div>
@@ -40,6 +41,7 @@
       {% if role == 'lab_technician' %}
       <td>
         <form method="post" class="flex-between">
+          <input type="hidden" name="_csrf_token" value="{{ csrf_token }}">
           <input type="hidden" name="action" value="complete">
           <input type="hidden" name="request_id" value="{{ l.id }}">
           <input name="result" placeholder="Enter result…" required style="flex:1">

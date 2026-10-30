@@ -6,6 +6,7 @@
   <p class="section-title">New Triage Assessment</p>
   <div class="card">
     <form method="post">
+      <input type="hidden" name="_csrf_token" value="{{ csrf_token }}">
       <div class="form-grid">
         <div style="grid-column:1/-1">
           <label>Patient</label>
@@ -49,6 +50,7 @@
         <td>{{ entry.nurse_name }}</td>
         <td>
           <form method="post">
+            <input type="hidden" name="_csrf_token" value="{{ csrf_token }}">
             <input type="hidden" name="action" value="resolve">
             <input type="hidden" name="triage_id" value="{{ entry.id }}">
             <button class="btn btn-small" type="submit">Resolve</button>
